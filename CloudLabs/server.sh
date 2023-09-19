@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Add a default route via the router
-sudo route add default gw 192.168.8.1
+# Accept connections from the router
+iptables -A INPUT -s 192.168.8.0/24 -j ACCEPT
 
-# Display the updated routing table for verification
-route -n
+# Accept connections from the clients
+iptables -A INPUT -s 192.168.4.0/24 -j ACCEPT
 
-echo "Routing configuration has been updated on the server."
+# Respond to ICMP ping requests
+iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT

@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Add routes for the connected networks
-sudo route add -net 192.168.4.0/24 gw 192.168.4.254
-sudo route add -net 192.168.6.0/24 gw 192.168.6.1
-sudo route add -net 192.168.7.0/24 gw 192.168.7.1
+# Enable IP forwarding
+sysctl net.ipv4.ip_forward=1
 
-# Display the updated routing table for verification
-route -n
+# Add a route to the client network
+ip route add 192.168.4.0/24 via 192.168.4.1
 
-echo "Routing configuration has been updated on the router."
+# Add a route to the server network
+ip route add 192.168.8.0/24 via 192.168.8.2
